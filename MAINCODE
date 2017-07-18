@@ -1,0 +1,118 @@
+//Name: Shivam
+//Purpose: determines years to get desired return on cd investment
+//Description: GUI that displays time required to achieve a final value of CD given initial value and interest rate 
+
+package InvestmentCalculator;
+
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.text.NumberFormat;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+//importing libraries
+
+public class InvestmentCalculator extends JFrame implements ActionListener{
+JLabel title, investmentLbl, interestLbl, endingLbl, yearsLbl;
+JTextField investmentField, interestField, endingField;
+JButton enterbtn;
+Container frame;
+
+
+//declare all variables
+
+public InvestmentCalculator () {
+//gui design
+    
+    super ("CD Calculator"); //title @ top
+    
+    frame = getContentPane (); //actualbox
+    frame.setLayout(null);//default layout
+    
+      title = new JLabel ("CD Calculator");
+    investmentLbl = new JLabel ("Enter intiial investment ($): ");
+    interestLbl = new JLabel ("Enter the annual interest rate(%): ");
+    endingLbl = new JLabel ("Enter ending value ($): ");
+    yearsLbl = new JLabel ("The number of years required are: ");
+    //declare all JLabels)
+    
+    investmentField = new JTextField ();
+    interestField = new JTextField ();
+    endingField = new JTextField ();
+    //declare all text fields
+    
+    enterbtn = new JButton ("Calculate");
+    enterbtn.addActionListener(this);
+    //declare buttons
+    
+    
+    title.setBounds (0,0, 360,50);
+    investmentLbl.setBounds (0,25, 500, 50);
+    investmentField.setBounds (0,65,650,50);
+    interestLbl.setBounds (0,105,650,50);
+    interestField.setBounds (0,145, 650, 50);
+    endingLbl.setBounds (0, 205, 650, 50);
+    endingField.setBounds (0,245, 650, 50);
+    enterbtn.setBounds (0, 315, 650, 50);
+    yearsLbl.setBounds (0,365,650,50);
+    //set sizes and position for all components
+    
+    frame.add(title);
+    frame.add(investmentLbl);
+    frame.add(investmentField);
+    frame.add(interestLbl);
+    frame.add(interestField);
+    frame.add(endingLbl);
+    frame.add(endingField);
+    frame.add(enterbtn);
+    frame.add(yearsLbl);
+    //placed all components on frame
+    
+    setSize(1000,1200);//sets size of frame
+    setVisible(true);//sets it to be visible
+    setDefaultCloseOperation (EXIT_ON_CLOSE);//ends the process
+}
+@Override
+public void actionPerformed (ActionEvent evt){
+    if (evt.getSource () == enterbtn)
+//explains what to do if button pressed
+    {
+        String investmentStr, interestStr, endingStr;
+        double investmentQ, interestQ, endingQ;
+        int yearsQ = 0;
+        investmentStr = investmentField.getText();
+        investmentQ = Double.parseDouble(investmentStr);
+        interestStr = interestField.getText();
+        interestQ = Double.parseDouble(interestStr);
+        interestQ = interestQ/100;
+        endingStr = endingField.getText();
+        endingQ = Double.parseDouble(endingStr);
+        //parsing text field results from string to double
+        while (investmentQ<endingQ)
+        {
+            yearsQ++; //increasing yearsQ by 1
+            investmentQ = investmentQ + (investmentQ * interestQ);
+            //formula for CD
+            if (investmentQ>=endingQ)
+            {
+                yearsLbl.setText("The number of years required are: " + yearsQ);
+                break;
+            }
+            //when this condition is met, set yearsLbl to this and end loop
+        }
+    }
+//converting strings to double that java can read     
+    
+           
+}
+    public static void main(String[] args) {
+     
+    
+        InvestmentCalculator launcher = new InvestmentCalculator ();
+    }//launcher
+    
+}
+ 
+   
